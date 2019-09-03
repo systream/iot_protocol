@@ -7,22 +7,22 @@ IOT protocol library
 
 ##### Message Type: 1
 ```erlang
-Obj = iot_protocol:ensemble(iot_protocol_obj:new(1)).
+BinaryMsg = iot_protocol:ensemble(iot_protocol_obj:new(1)).
 ```
 
 ##### Message Type: 1 with ProtocolVersion: 2 
 ```erlang
-Obj = iot_protocol:ensemble(iot_protocol_obj:new(2, 1)).
+BinaryMsg = iot_protocol:ensemble(iot_protocol_obj:new(2, 1)).
 ```
 
 ##### Message Type: 1 with Payload: <<"hello"">> 
 ```erlang
-Obj = iot_protocol:ensemble(iot_protocol_obj:new(1, <<"hello">>)).
+BinaryMsg = iot_protocol:ensemble(iot_protocol_obj:new(1, <<"hello">>)).
 ```
 
 ##### Message Type: 1 with ProtocolVersion: 2 with Payload: <<"hello"">> 
 ```erlang
-Obj = iot_protocol:ensemble(iot_protocol_obj:new(2, 1, <<"hello">>)).
+BinaryMsg = iot_protocol:ensemble(iot_protocol_obj:new(2, 1, <<"hello">>)).
 ```
 
 ##### Set Audit Number

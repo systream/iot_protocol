@@ -24,7 +24,8 @@ parse_with_payload_more_data_test() ->
     iot_protocol_obj:new(3, <<1, 2, 3, 4, 5>>)).
 
 parse_with_payload_less_data_test() ->
-  ?assertError(function_clause, iot_protocol:parse(<<0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 3, 1, 2, 3>>)).
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 3,
+                                                 1, 2, 3>>)).
 
 ensemble_empty_test() ->
   assert_ensemble(<<0, 0, 0, 0, 1, 210, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(1, 210)).
