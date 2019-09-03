@@ -28,3 +28,14 @@
 % Message Types
 -define(PING, 10).
 -define(PONG, 11).
+
+-define(REGISTER_DEVICE, 01).
+
+-define(ACK, 02).
+-define(ERROR, 03).
+
+-define(REGISTER_SENSOR, 04).
+-define(REGISTER_SWITCH, 05).
+
+-define(GET, 20).
+-define(ADVICE, 30).

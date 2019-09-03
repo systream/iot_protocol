@@ -84,6 +84,27 @@ type_and_protocol_and_payload_test() ->
     iot_protocol_obj:get_total_message_length(Obj)
   ).
 
+reply_test() ->
+  Obj = iot_protocol_obj:new(13, 5, <<"test">>),
+  ObjWithAudit = iot_protocol_obj:set_audit_number(Obj, 15),
+  ReplyObj = iot_protocol_obj:reply(ObjWithAudit, 51, <<"payload">>),
+  ?assertEqual(
+    51,
+    iot_protocol_obj:get_message_type(ReplyObj)
+  ),
+  ?assertEqual(
+    13,
+    iot_protocol_obj:get_protocol_version(ReplyObj)
+  ),
+  ?assertEqual(
+    15,
+    iot_protocol_obj:get_audit_number(ReplyObj)
+  ),
+  ?assertEqual(
+    <<"payload">>,
+    iot_protocol_obj:get_payload(ReplyObj)
+  ).
+
 audit_number_test() ->
   Obj = iot_protocol_obj:new(5),
   NewObj = iot_protocol_obj:set_audit_number(Obj, 190802250101010),

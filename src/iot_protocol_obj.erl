@@ -20,7 +20,8 @@
   get_message_type/1,
   get_total_message_length/1,
   get_audit_number/1,
-  set_audit_number/2]).
+  set_audit_number/2,
+  reply/3]).
 
 -spec new(integer()) -> iot_protocol_obj().
 new(MessageType) ->
@@ -41,6 +42,10 @@ new(ProtocolVersion, MessageType, <<Payload/binary>>)
     payload = Payload,
     total_message_length = byte_size(Payload) + 11
   }.
+
+-spec reply(iot_protocol_obj(), integer(), binary()) -> iot_protocol_obj().
+reply(#iot_protocol{audit_number = AuditNumber, protocol_version = ProtocolVersion}, MessageType, Payload) ->
+  set_audit_number(new(ProtocolVersion, MessageType, Payload), AuditNumber).
 
 -spec get_protocol_version(iot_protocol_obj()) -> integer().
 get_protocol_version(#iot_protocol{protocol_version = ProtocolVersion}) ->
