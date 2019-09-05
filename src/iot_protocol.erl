@@ -15,10 +15,8 @@ ensemble(#iot_protocol{protocol_version = ProtocolVersion,
                         message_type = MessageType,
                         payload = Payload,
                         audit_number = AuditNumber}) ->
-  ProtocolVersionBin = binary:encode_unsigned(ProtocolVersion),
-  MessageTypeBin = binary:encode_unsigned(MessageType),
   PayloadSize = get_payload_size(Payload),
-  <<PayloadSize/binary, ProtocolVersionBin/binary, MessageTypeBin/binary,
+  <<PayloadSize/binary, ProtocolVersion:8/integer, MessageType:8/integer,
     AuditNumber:?AUDIT_NUMBER_SIZE/integer, Payload/binary>>.
 
 -spec parse(binary()) -> iot_protocol_obj() | chunked_message.

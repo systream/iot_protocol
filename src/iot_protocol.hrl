@@ -39,3 +39,6 @@
 
 -define(GET, 20).
 -define(ADVICE, 30).
+
+-define(REBOOT, 91).
+-define(UPGRADE_FIRMWARE, 92).
