@@ -15,6 +15,8 @@
 
 -define(LATEST_PROTOCOL_VERSION, 1).
 
+-export_type([iot_protocol_obj/0]).
+
 -record(iot_protocol, {protocol_version = ?LATEST_PROTOCOL_VERSION :: integer(),
                        message_type :: integer(),
                        audit_number = 0 :: integer(),
