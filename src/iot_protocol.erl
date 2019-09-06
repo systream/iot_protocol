@@ -50,7 +50,7 @@ extract_payload(_, _) ->
 get_payload_size(<<Payload/binary>>) ->
   pad_size(byte_size(Payload)).
 
-pad_size(Size) when Size =< ?PAYLOAD_LENGTH_SIZE ->
+pad_size(Size) when Size =< 4294967296 ->
   <<Size:?PAYLOAD_LENGTH_SIZE/integer>>;
 pad_size(_Binary) ->
   throw("Payload cannot be more thant 4Gbyte").
