@@ -23,6 +23,14 @@ parse_with_payload_more_data_test() ->
   assert_message(<<0, 0, 0, 5, 1, 3, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9>>,
     iot_protocol_obj:new(3, <<1, 2, 3, 4, 5>>)).
 
+parse_with_less_than_size_data_test() ->
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0>>)),
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0>>)),
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0>>)),
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5>>)),
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5, 1>>)),
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5, 1, 0>>)).
+
 parse_with_payload_less_data_test() ->
   ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 3,
                                                  1, 2, 3>>)).

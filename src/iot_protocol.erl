@@ -36,7 +36,9 @@ parse(<<PayloadLength:?PAYLOAD_LENGTH_SIZE/integer,
         payload = Payload,
         total_message_length = PayloadLength+11
       }
-  end.
+  end;
+parse(_) ->
+  chunked_message.
 
 -spec extract_payload(binary(), integer()) -> binary() | chunked_message.
 extract_payload(<<>>, 0) ->
