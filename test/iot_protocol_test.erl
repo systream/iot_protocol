@@ -13,14 +13,14 @@
 
 
 parse_not_payload_test() ->
-  assert_message(<<0, 0, 0, 0, 4, 5, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(4, 5)),
-  assert_message(<<0, 0, 0, 0, 1, 3, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(3)).
+  assert_message(<<0, 0, 0, 11, 4, 5, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(4, 5)),
+  assert_message(<<0, 0, 0, 11, 1, 3, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(3)).
 
 parse_with_payload_test() ->
-  assert_message(<<0, 0, 0, 5, 2, 3, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5>>, iot_protocol_obj:new(2, 3, <<1, 2, 3, 4, 5>>)).
+  assert_message(<<0, 0, 0, 16, 2, 3, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5>>, iot_protocol_obj:new(2, 3, <<1, 2, 3, 4, 5>>)).
 
 parse_with_payload_more_data_test() ->
-  assert_message(<<0, 0, 0, 5, 1, 3, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9>>,
+  assert_message(<<0, 0, 0, 16, 1, 3, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9>>,
     iot_protocol_obj:new(3, <<1, 2, 3, 4, 5>>)).
 
 parse_with_less_than_size_data_test() ->
@@ -32,17 +32,17 @@ parse_with_less_than_size_data_test() ->
   ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5, 1, 0>>)).
 
 parse_with_payload_less_data_test() ->
-  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 5, 1, 0, 0, 0, 0, 0, 3,
+  ?assertEqual(chunked_message, iot_protocol:parse(<<0, 0, 0, 16, 1, 0, 0, 0, 0, 0, 3,
                                                  1, 2, 3>>)).
 
 ensemble_empty_test() ->
-  assert_ensemble(<<0, 0, 0, 0, 1, 210, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(1, 210)).
+  assert_ensemble(<<0, 0, 0, 11, 1, 210, 0, 0, 0, 0, 0>>, iot_protocol_obj:new(1, 210)).
 
 ensemble_payload_test() ->
-  assert_ensemble(<<0, 0, 0, 3, 1, 210, 0, 0, 0, 0, 0, 1, 2, 3>>, iot_protocol_obj:new(1, 210, <<1,2,3>>)).
+  assert_ensemble(<<0, 0, 0, 14, 1, 210, 0, 0, 0, 0, 0, 1, 2, 3>>, iot_protocol_obj:new(1, 210, <<1,2,3>>)).
 
 ensemble_too_big_payload_payload_test() ->
-  assert_ensemble(<<0, 0, 0, 3, 1, 210, 0, 0, 0, 0, 0, 1, 2, 3>>, iot_protocol_obj:new(1, 210, <<1,2,3>>)).
+  assert_ensemble(<<0, 0, 0, 14, 1, 210, 0, 0, 0, 0, 0, 1, 2, 3>>, iot_protocol_obj:new(1, 210, <<1,2,3>>)).
 
 assert_ensemble(Binary, Message) ->
   ?assertEqual(Binary, iot_protocol:ensemble(Message)).

@@ -15,16 +15,17 @@ ensemble(#iot_protocol{protocol_version = ProtocolVersion,
                         message_type = MessageType,
                         payload = Payload,
                         audit_number = AuditNumber}) ->
-  PayloadSize = get_payload_size(Payload),
-  <<PayloadSize/binary, ProtocolVersion:8/integer, MessageType:8/integer,
+  MessageSize = get_message_size(Payload),
+  <<MessageSize/binary, ProtocolVersion:8/integer, MessageType:8/integer,
     AuditNumber:?AUDIT_NUMBER_SIZE/integer, Payload/binary>>.
 
 -spec parse(binary()) -> iot_protocol_obj() | chunked_message.
-parse(<<PayloadLength:?PAYLOAD_LENGTH_SIZE/integer,
+parse(<<MessageLength:?PAYLOAD_LENGTH_SIZE/integer,
         ProtocolVersion:?PROTOCOL_VERSION_SIZE/integer,
         MessageType:?MESSAGE_TYPE_SIZE/integer,
         AuditNumber:?AUDIT_NUMBER_SIZE/integer,
         Rest/binary>>) ->
+  PayloadLength = MessageLength - 11,
   case extract_payload(Rest, PayloadLength) of
     chunked_message ->
       chunked_message;
@@ -34,7 +35,7 @@ parse(<<PayloadLength:?PAYLOAD_LENGTH_SIZE/integer,
         message_type = MessageType,
         audit_number = AuditNumber,
         payload = Payload,
-        total_message_length = PayloadLength+11
+        total_message_length = MessageLength
       }
   end;
 parse(_) ->
@@ -49,8 +50,8 @@ extract_payload(<<Message/binary>>, Size) when byte_size(Message) >= Size ->
 extract_payload(_, _) ->
   chunked_message.
 
-get_payload_size(<<Payload/binary>>) ->
-  pad_size(byte_size(Payload)).
+get_message_size(<<Payload/binary>>) ->
+  pad_size(byte_size(Payload) + 11).
 
 pad_size(Size) when Size =< 4294967296 ->
   <<Size:?PAYLOAD_LENGTH_SIZE/integer>>;
