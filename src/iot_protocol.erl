@@ -4,11 +4,11 @@
 -export([parse/1, assemble/1]).
 
 %%% ------------------------------
-% 4 byte payload length
+% 4 byte total message length (4 byte length included)
 % 1 byte protocol version
 % 1 byte message_type
 % 5 byte audit_number
-% messageLength payload
+% <message length> payload
 
 -spec assemble(iot_protocol_obj()) -> binary().
 assemble(#iot_protocol{protocol_version = ProtocolVersion,

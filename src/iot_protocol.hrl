@@ -36,11 +36,11 @@
 -define(ACK, 02).
 -define(ERROR, 03).
 
--define(REGISTER_SENSOR, 04).
--define(REGISTER_SWITCH, 05).
+-define(REGISTER_IO, 5).
 
 -define(GET, 20).
 -define(ADVICE, 30).
+-define(SET, 40).
 
--define(REBOOT, 91).
--define(UPGRADE_FIRMWARE, 92).
+-define(RESTART, 90).
+-define(UPDATE_DEVICE, 91).
