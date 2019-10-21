@@ -1,7 +1,7 @@
 -module(iot_protocol).
 -include("iot_protocol.hrl").
 
--export([parse/1, ensemble/1]).
+-export([parse/1, assemble/1]).
 
 %%% ------------------------------
 % 4 byte payload length
@@ -10,8 +10,8 @@
 % 5 byte audit_number
 % messageLength payload
 
--spec ensemble(iot_protocol_obj()) -> binary().
-ensemble(#iot_protocol{protocol_version = ProtocolVersion,
+-spec assemble(iot_protocol_obj()) -> binary().
+assemble(#iot_protocol{protocol_version = ProtocolVersion,
                         message_type = MessageType,
                         payload = Payload,
                         audit_number = AuditNumber}) ->
