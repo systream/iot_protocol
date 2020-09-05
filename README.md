@@ -35,7 +35,7 @@ NewObj = iot_protocol:set_audit_number(Obj, 2019090307501234).
 Reply = iot_protocol:reply(NewObj, 12, <<"reply">>).
 ```
 
-#### parse message
+#### Parse message
 
 ```erlang
 Obj = io_protocol:parse(<<0, 0, 0, 0, 1, 5, 0, 0, 0, 0, 0>>).
@@ -60,6 +60,14 @@ iot_protocol_obj:get_payload(Obj)
 ```erlang
 iot_protocol_obj:get_audit_number(Obj)
 ```
+
+### Protocol description
+
+* First 4 bytes is the total message length (4 byte length included)
+* Fifth byte is the protocol version
+* Sixth byte is the message type
+* Seventh 5 bytes is the audit_number
+* Payload
 
 
 Build

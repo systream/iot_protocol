@@ -3,13 +3,8 @@
 
 -export([parse/1, assemble/1]).
 
-%%% ------------------------------
-% 4 byte total message length (4 byte length included)
-% 1 byte protocol version
-% 1 byte message_type
-% 5 byte audit_number
-% <message length> payload
 
+%% @doc Create binary message from iot protocol object.
 -spec assemble(iot_protocol_obj()) -> binary().
 assemble(#iot_protocol{protocol_version = ProtocolVersion,
                         message_type = MessageType,
@@ -19,6 +14,7 @@ assemble(#iot_protocol{protocol_version = ProtocolVersion,
   <<MessageSize/binary, ProtocolVersion:8/integer, MessageType:8/integer,
     AuditNumber:?AUDIT_NUMBER_SIZE/integer, Payload/binary>>.
 
+%% @doc Parse binary message to iot protocol object.
 -spec parse(binary()) -> iot_protocol_obj() | chunked_message.
 parse(<<MessageLength:?PAYLOAD_LENGTH_SIZE/integer,
         ProtocolVersion:?PROTOCOL_VERSION_SIZE/integer,

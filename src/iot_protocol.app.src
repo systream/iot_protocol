@@ -1,6 +1,6 @@
 {application, iot_protocol,
  [{description, "IOT protocoll for oldhill project"},
-  {vsn, "0.1.0"},
+  {vsn, "1.0.0"},
   {registered, []},
   {applications,
    [kernel,
